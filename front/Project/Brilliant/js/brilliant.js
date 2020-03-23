@@ -1,0 +1,23 @@
+$(document).ready(function(){
+    $("#login").click(function(){
+        $(".login-max").css({
+            "z-index":"1002"
+        });
+        $(".login").css({
+            "opacity":"1"
+        });
+        $(".login").css({
+            "display":"block"
+        });
+        $(".login").animate({"top":"10%"});
+    });
+    $(".zhezhao").click(function () { 
+        $(".login").animate({"top":"400px"});
+        $(".login").css({
+            "display":"none"
+        });
+        $(".login-max").css({
+            "z-index":"-1"
+        });
+    });
+});

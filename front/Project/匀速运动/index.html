@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        li{
+            list-style: none;
+        }
+        #main{
+            position: absolute  ;
+            z-index: 2;
+            width: 100px;
+            height: 100px;
+            border:4px solid #000;
+            left: 396px;
+        }
+        #box{
+            position: absolute;
+            width: 500px;
+            height: 100px;
+        }
+        #box li{
+            float: left;
+            width: 100px;
+            height: 100px;
+            background: #fff;
+        }
+    </style>
+    <script>
+        window.onload=function(){
+            var oLi = document.getElementsByTagName('li');
+            var color=["blue",'red',"yellow","green","chocolate"];
+            console.log(oLi.length);
+            for(i = 0;i<=oLi.length;i++){
+                for(i=0;i<=color.length;i++){
+                    oLi[i].style.background = color[i];
+                }
+            } 
+        }
+        var timer = null;
+        function starMove(target){
+            var oDiv =document.getElementById('box');
+    
+            timer=setInterval(function (){
+                speed = 10;
+                // var speed = parseInt(target-parseInt(offsetLeft))/10;
+                if(oDiv.offsetLeft>=target){
+                    clearInterval(timer);
+                }else{
+                    oDiv.style.left=oDiv.offsetLeft+speed+'px';
+                }
+            },30);
+        }
+    </script>
+</head>
+<body>
+    <meter></meter>
+    <input type="button" value="开始运动" onclick="starMove(300)"></input>
+    <div id="main">
+    </div>
+    <div id="box">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </div>
+</body>

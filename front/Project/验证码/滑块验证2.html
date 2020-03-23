@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>滑块验证</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        #box{
+            position: relative;
+            width: 300px;
+            height: 40px;
+            margin: 0 auto;
+            margin-top: 10px; 
+            background-color: #e8e8e8;
+            box-shadow: 1px 1px 5px rgba(0,0,0,0.2);
+        }
+        .bgColor{
+            position: absolute;
+            left:0;
+            top:0;
+            width:40px;
+            height: 40px;
+            background-color: lightblue;
+        }
+        .txt{
+            position: absolute;
+            width: 100%;
+            height: 40px;
+            line-height: 40px;
+            font-size: 14px;
+            color: #000;
+            text-align: center;
+        }
+        .btn{
+            position: absolute;
+            left:0;
+            top:0;
+            width: 44px;
+            height: 38px;
+            border: 1px solid #ccc;
+            background: #fff;
+            text-align: center;
+            cursor: move;
+        }
+        .btn>i{
+            position: absolute;
+            top:50%;
+            left:50%;
+            transform: translate(-50%,-50%);
+        }
+        .btn.active>i{
+            color:green;
+        }
+        @font-face {font-family: "iconfont";
+        src: url('iconfont.eot?t=1584668187800'); /* IE9 */
+        src: url('iconfont.eot?t=1584668187800#iefix') format('embedded-opentype'), /* IE6-IE8 */
+        url('data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAANMAAsAAAAAB1AAAAMAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCDBgqCIIIGATYCJAMMCwgABCAFhG0HThtkBsiusCnD9UiJaGpgIQh6c39wACAe+ubIP7uTHAAobivr+XkAUAQaWF2lq3GAElDY/K9N/QGiViUyT0WeEp4Mui+dfKxTmVckmGiKp259Hub0QsVLvSTQDG0Cx+p1DbFi3M3nuZzeNTzA+S3LZa6B96IAE+odUHtTUWQljA1jNxE4hPsE+i2bLGf/wuXdUCyBZYG4LngSinNxKa1Sr9DW7E3xRqO3vC7fAWzx38cfiEQxRVOBtQeuLdBg9nd+nMnb3D1yhhIU83lhHaJiB5DEuVr/CXkyv0Oe/kCbH/aCVgplrtRQB5eH2hb+4VEE0QLNg2BDKxS+wyIKP1be9SMVtEgcAu5q5smxG8uUtY2+tn9v48yDW5r6eskFsw7ta8ADmyk7uLd++v7NDT3dyhkzDuxr4oe2rPtdT/761T289x0Ym9O8/9t34+D5eq23kXZfPtIw0HDlt4f6rDkGZ0eq/o0b/J4Zm3n1GmpOtD8w7aqR/2O9WC0nOzY7/ttYCO/bTHO3P8ul45GELaK54+sZNXfuqJ5g/lXj5/deyuNfG/3s9sMpN98RWzsn/8FDPfHfiZAAuHWrvBkqPkqoj/79c+b+//scH5l+Lwk+NauNq/s10qvQW/GnRyV0HWmrgKOmr9faHKi2jcwW9MMUHRAelxlvnnqbYug1laLosYSq1wqZ7B1oDNiJVq9d6LfdosMDJkh5IvuwzQ4FYdQtFMPeohr1g0z2IBrTsmiNRh76HYu6MweshSidJzGpUCOpNURQx2bIpUpFayfyFWZSZlWc24vSFykSDoSKpUVoo5xjg7+SR5RihEnHIguVx9A0HeJKJ41UBXSl3KnBIKv7UIA6FpTaR0JJCtIQKWsQAuWwMTpcKS19vxPiVjAlyRbKQLwXknyCPhEWEOpBLtLbvSj38o5vJS5CURiCkRwWYqEyC5lMDsKtn5WGKCVAH5F1TRWEg1hffWB9o/UBZVYf4JIaJWqk8Ys2N3GK5qxIsclScF1VrRY2X6uvqK1NC9QRAA==') format('woff2'),
+        url('iconfont.woff?t=1584668187800') format('woff'),
+        url('iconfont.ttf?t=1584668187800') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+        url('iconfont.svg?t=1584668187800#iconfont') format('svg'); /* iOS 4.1- */
+        }
+
+        .iconfont {
+        font-family: "iconfont" !important;
+        font-size: 30px;
+        font-style: normal;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        }
+
+        .icon-angle-double-right:before {
+        content: "\e7a1";
+        }
+
+        .icon-xingzhuangjiehe:before {
+        content: "\e604";
+        }
+    </style>
+</head>
+<body>
+    <div id="box" onselectstart="return false;">
+        <div class="bgColor"></div>
+        <div class="txt" >滑动解锁</div>
+        <!--给i标签添加上相应字体图标的类名即可-->
+        <div class="btn"><i class="iconfont icon-angle-double-right "></i></div>
+    </div>  
+    <script>
+        //一、定义了一个获取元素的方法
+        function getEle(selector){
+            return document.querySelector(selector);
+        }
+        //二、获取到需要用到的DOM元素
+        var box = getEle("#box"),//容器
+            bgColor = getEle(".bgColor"),//背景色
+            txt = getEle(".txt"),//文本
+            btn = getEle(".btn"),//滑块
+            icon = getEle(".btn>i"),
+            Distance = box.offsetWidth- btn.offsetWidth,//解锁需要滑动的距离
+            downX,//用于存放鼠标按下时的位置
+            isSuccess = false;//是否解锁成功的标志，默认不成功
+ 
+        //三、给滑块添加鼠标按下事件
+        btn.onmousedown = mousedownBtn;
+ 
+        //鼠标按下事件的方法实现
+        function mousedownBtn(e){
+            bgColor.style.transition = "";
+            btn.style.transition = "";
+            var e = e || window.event || e.which;
+            downX = e.clientX;
+            //在鼠标按下时，分别给鼠标添加移动和松开事件
+            document.onmousemove = mousemoveBtn;
+            document.onmouseup = mouseupBtn;
+        };
+ 
+        //四、定义一个获取鼠标当前需要移动多少距离
+        function getOffsetX(offset,min,max){
+            if(offset < min){
+                offset = min;
+            }else if(offset > max){
+                offset = max;
+            }
+            return offset;
+        }
+ 
+        //鼠标移动事件的方法实现
+        function mousemoveBtn(e){
+            var e = e || window.event || e.which;
+            var moveX = e.clientX;
+            var offsetX = getOffsetX(moveX - downX,0,Distance);//定义一定的距离不小于0，不大于滑块需要移动的距离
+            bgColor.style.width = offsetX + "px";
+            btn.style.left = offsetX + "px";
+ 
+            if(offsetX == Distance){
+                success();
+            }
+            //如果不设置滑块滑动时会出现问题（目前还不知道为什么）---------(目前测试无错)
+            e.preventDefault();//阻止元素发生默认的行为。
+        };
+ 
+        //鼠标松开事件的方法实现
+        function mouseupBtn(e){
+            if(!isSuccess){
+                bgColor.style.width = 0 + "px";
+                btn.style.left = 0 + "px";
+                bgColor.style.transition = "width 0.8s linear";//确认条往回移动
+                btn.style.transition = "left 0.8s linear";//滑块往回移动
+            }
+            document.onmousemove = null;
+            document.onmouseup = null;
+        };
+ 
+        //五、定义一个滑块解锁成功的方法
+        function success(){
+            isSuccess = true;
+            txt.innerHTML = "解锁成功";
+            bgColor.style.backgroundColor ="lightgreen";
+            btn.className = "btn active";
+            icon.className = "iconfont icon-xingzhuangjiehe ";
+            //滑动成功时，移除鼠标按下事件和鼠标移动事件
+            btn.onmousedown = null;
+            document.onmousemove = null;
+        };
+    </script>
+</body>
+</html>

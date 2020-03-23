@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf8">
+    <style>
+        ul{
+            margin: 0;
+            padding: 0;
+            width: 159px;
+            height: 100px;
+        }
+        li{
+            list-style: none;
+            float: left;
+            margin-right: 3px;
+        }
+        .round{
+            border-radius: 50%;
+        }
+        .location_out{
+            position: relative;
+            width: 50px;
+            height: 50px;
+        }
+        .location{
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            width: 42px;
+            height: 42px;
+            background-color: #fff;
+        }
+        .blue_out{
+            /* z-index: 5; */
+            background-color: #3399CC;
+        }
+        .black_out{
+            z-index: 6;
+            background-color: #000;
+        }
+        .red_out{
+            z-index: 8;
+            background-color: #ff0000;
+        }
+        .yellow_out{
+            z-index: 2;
+            background-color: #ffff00;
+            margin-left: 25px;
+        }
+        .green_out{
+            z-index: 7;
+            background-color: #00ff00;
+        }
+        .down{
+            margin-top: -30px;
+        }
+        .down2{
+            margin-top: -30px;
+        }
+    </style>
+</head>
+<body>
+    <ul>
+        <li>
+            <div class="blue_out round location_out">
+                <div class="blue round location"></div>
+            </div>
+        </li>
+        <li>
+            <div class="black_out round location_out">
+                <div class="black round location"></div>
+            </div>
+        </li>
+        <li>
+            <div class="red_out round location_out">
+                <div class="red round location"></div>
+            </div>
+        </li>
+        <li class="down">
+            <div class="yellow_out round location_out">
+                <div class="yellow round location"></div>
+            </div>
+        </li>
+        <li class="down2">
+            <div class="green_out round location_out">
+                <div class="green round location"></div>
+            </div>
+        </li>
+    </ul>
+    
+    
+</body>

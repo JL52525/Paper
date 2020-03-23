@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>图形验证码</title>
+    <meta charset="utf-8">
+</head>
+<body>
+    <canvas id="canvas" width="120" height="40">浏览器版本不支持</canvas>
+    <input type="text" id="text">
+    <button id="btn">确认</button>
+    <script>
+        var canvas = document.getElementById("canvas");//演员
+        var context = canvas.getContext("2d");//舞台
+        var oTxt = document.getElementById("text");
+        var oBtn = document.getElementById("btn");
+        draw();
+        canvas.onclick = piant;
+        function piant(){
+            context.clearRect(0,0,120,40);
+            draw();
+        }
+        function getColor(){
+            var r = Math.floor(Math.random()*256);
+            var g = Math.floor(Math.random()*256);
+            var b = Math.floor(Math.random()*256);
+            return "rgb("+r+","+g+","+b+")"
+        }
+        function draw(){
+            codeArr = [];
+            context.strokeRect(0,0,100,40);
+            var aCode = ["2","3","4","5","6","7","8","9","a","b","c","d","e","f","g","h","i","j","k","m","n","p","q","r","s","t","u","w","x","y","z"];
+            for(var i= 0 ;i<4;i++){
+                var x= 10+i*20;//字母之间的间隔为20
+                var y= 20+5*Math.random();//字母处于canvas中20~30之间的距离
+                var index=Math.floor(Math.random()*aCode.length); //随即索引值
+                var txt = aCode[index];
+                context.font = "bold 25px 微软雅思";
+                context.fillStyle = getColor();
+                context.translate(x,y);//将canvas移动到xy坐标点
+                var deg = 90*Math.random()*Math.PI/180;//获取角度值 Math.PI/180为1°
+                context.rotate(deg);//再将canvas旋转一个弧度
+                context.fillText(txt,0,0);//在旋转后的canvas上写字母 0,0为位置坐标
+                context.rotate(-deg);//在将canvas转回去
+                context.translate(-x,-y);//在讲canvas回归原位
+                codeArr.push(txt);
+            }
+            for(var i = 0;i<8;i++){//获取8条线
+                context.beginPath();//开始绘制
+                context.moveTo(Math.random()*100,Math.random()*40);//起点位置在120到40之间（x<120,y<40）
+                context.lineTo(Math.random()*100,Math.random()*40);//终点位置在120到40之间（x<120,y<40)
+                context.strokeStyle = getColor();//获取一个颜色
+                context.stroke();
+            }
+            for(var i = 0;i<20;i++){//获取二十个点
+                context.beginPath();
+                var x = Math.random()*100;//随机获取x的位置
+                var y = Math.random()*40;//随机获取y的位置
+                context.moveTo(x,y);//起点位置
+                context.lineTo(x+1,y+1);//终点位置
+                context.strokeStyle = getColor();
+                context.stroke();
+            }
+            console.log(codeArr);
+            oBtn.onclick = function(){
+                txtArr = oTxt.value;
+                
+                if(txtArr[0]==codeArr[0] && txtArr[1]==codeArr[1] && txtArr[2] == codeArr[2] && txtArr[3]==codeArr[3]){
+                    alert("验证码输入正确");
+                    //console.log("true");
+                    
+                }else{
+                    alert("验证码输入错误");
+                    oTxt.value = null;
+                    //console.log("false");
+                    piant();
+                }
+            }
+        }
+    </script>
+</body>
+</html>

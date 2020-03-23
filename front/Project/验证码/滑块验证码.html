@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>滑块验证码</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        *{
+            margin: 0px;
+            padding: 0px;
+            font-family:"微软雅黑";
+        }
+        .drag{
+            width: 300px;
+            height:40px;
+            line-height: 40px;
+            background-color: #e8e8e8;
+            position: relative;
+            margin: 0px;
+        }
+        .bg{
+            width: 40px;
+            height: 100%;
+            position: absolute;
+            background-color: cornflowerblue;
+        }
+        .text{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            user-select: none;
+        }
+        .btn{
+            width: 40px;
+            height: 38px;
+            position: absolute;
+            border: 1px solid #ccc;
+            cursor: move;
+            font-family: "宋体";
+            text-align: center;
+            background-color: #fff;
+            user-select: none;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="drag">
+        <div class="bg"></div>
+        <div class="text" onselectstart="return false">请拖动滑块解锁</div>
+        <div class="btn">&gt;&gt;</div>
+    </div>
+    <script>
+        //一、定义一个获取DOM元素的方法
+        var $ = function(selector){
+            return document.querySelector(selector);
+        },
+            box = $(".drag"),//容器
+            bg = $(".bg"),//背景
+            text = $(".text"),//文字
+            btn = $(".btn"),//滑块
+            Success =false,//是否通过验证的标志
+            distance =box.offsetWidth - btn.offsetWidth;//滑块拖动到最右边的距离
+            
+            //二、给鼠标注册鼠标按下事件
+            btn.onmousedown = function(e){
+                btn.style.transition = "";
+                bg.style.transition = "";
+           
+            var e = e || window.event;
+            var downX = e.clientX;//滑块初始位置和浏览器左边的距离              
+
+            //三、给文档注册鼠标移动事件
+            document.onmousemove = function(e){
+                var e = e||window.event;
+                var moveX = e.clientX;//实际拖动滑块里浏览器左边的距离
+                var offsetX = moveX - downX;//滑块实际移动的距离
+                
+                if(offsetX>=distance){
+                    offsetX = distance;
+                }else if(offsetX<0){
+                    offsetX = 0;
+                }
+
+                btn.style.left = offsetX + "px";
+                bg.style.width = offsetX + "px";
+                
+                if(offsetX == distance){
+                    text.innerHTML = "验证通过";
+                    text.style.color = "#fff";
+                    btn.innerHTML = "&radic;";
+                    bg.style.backgroundColor = "lightgreen";
+
+                    Success = true;
+                    btn.onmousedown = null;
+                    btn.onmousemove = null;
+
+                    // setTimeout(function(){
+                    //     alert('解锁成功！');
+                    // },100);
+                };
+            };
+        };   
+        
+            //四、给文档注册鼠标松开时间
+            document.onmouseup = function(e){
+
+                if(!Success){
+                    btn.style.left = 0;
+                    bg.style.width = 0;
+                    btn.style.transition = "left is ease";
+                    bg.style.transition = "width is ease";
+                }else{
+                    alert('解锁成功!');
+                }
+                document.onmousemove = null;
+                document.onmouseup = null;
+            }
+    </script>
+</body>
+</html>

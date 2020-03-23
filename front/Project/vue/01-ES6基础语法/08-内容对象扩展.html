@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>08-内容对象扩展</title>
+    <style>
+        .test{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+<script>
+    // 1、模板字符串
+    let str = '今天阳光明媚';
+    let str1 = 'test';
+    // let html = '<html><head><p>今天天气很好</P></html></head>';
+    let html = `<html>
+                    <head>
+                        <p class="${str1}">${str}</P>
+                    </head>
+                </html>`;
+    console.log(html);
+    
+
+    // 2.数组的扩展
+    // Array.from(伪数组转换成真数组)
+    let allLis = document.querySelectorAll('li');
+    // console.log(allLis);
+    // console.log(Array.isArray(allLis));
+    // console.log(Array.from(allLis));
+    // console.log(Array.isArray(Array.from(allLis)));
+    
+    
+    // Array.of
+    
+    // console.log(Array.of(1,2,3,4));
+    // console.log(Array.of('张山','李四','王五','Julian'));
+    
+    // 3、对象的扩展
+    // let obj = {
+    //     'name':'张三',
+    //     'age':20
+    // }
+    let name = '李四';
+    let age = 20;
+    let obj={
+        name,
+        age
+    }
+    console.log(obj);
+    
+    // object.assign()
+    let obj1 = {name:'张三'};
+    let obj2 = {age:18};
+    let obj3 = {sex:'男'};
+    let obj4 = {friend:'李四'};
+    Object.assign(obj1,obj2,obj3,obj4);
+    console.log(obj1);
+    
+
+</script>
+</body>
+</html>

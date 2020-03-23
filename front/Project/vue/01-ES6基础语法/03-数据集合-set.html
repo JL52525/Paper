@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+</head>
+<body>
+<script>
+    // 1、创建一个集合
+    let set = new Set(['张三','李四','王五']);
+    console.log(set);
+    // 2、一个属性
+    console.log(set.size);
+    // 3、四个方法
+    // add
+    set.add('刘德华');
+    console.log(set);
+    // delect
+    console.log(set.delete('张三'));
+    console.log(set);
+    // has
+    console.log(set.has('张三'));
+    // clear
+    // set.clear(set);
+    // console.log(set);
+    // keys value
+    console.log(set.keys());
+    console.log(set.values());
+    
+    
+</script>
+</body>
+</html>
